@@ -37,7 +37,22 @@ public class Dijkstra {
          * SimpleGraph contains linked lists of graph vertex and edges.
          * Hashtable associates vertex objects with their names.
          */
-        Hashtable<String, Vertex> table = GraphInput.LoadSimpleGraph(graph);
+
+		/**
+		 * regresa un hashtable de los vertices con la estructura del profe
+		 * toca cambiar para los de la ruta  para que se pueda escoger por que en  los dos siguentes metodos se
+		 * necesitan la ruta intenta unificarla en una variable y se la pasa.Solo falta hacer un metodo que devuelva el punto de origen
+		 * por el momento supongamos que es Bogota.
+         *
+         *
+         * PS: Perro use debug y si no puede llame a Papa Ibanez ;)
+		 */
+		String path = "";
+		Hashtable<String, Vertex> table = GraphInput.LoadSimpleGraph(graph,path);
+		/**
+		 * regresa un hashtable de los destinos que hay q recorrerr
+		 */
+		Hashtable<String, Vertex> destinos = GraphInput.destinos(graph,path);
 		String response = "y";
 		// loops the program as long as user wants to
 		while(response.toLowerCase().equals("y")) {

@@ -18,6 +18,14 @@ import java.util.*;
  */
 public class GraphInput {
 
+    public ArrayList<Vertex> getDestinos() {
+        return destinos;
+    }
+
+    public void setDestinos(ArrayList<Vertex> destinos) {
+        this.destinos = destinos;
+    }
+
     /**
      * Load graph data from a text file via user interaction.
      * This method asks the user for a directory and path name.
@@ -26,11 +34,19 @@ public class GraphInput {
      * @param newgraph  a simple graph
      * @returns a hash table of (String, Vertex) pairs
      */
+    ArrayList<Vertex> destinos = new ArrayList<Vertex>();
+
     public static Hashtable<String, Vertex> LoadSimpleGraph(SimpleGraph newgraph) {
         System.out.print("Please enter the full path and file name for the input data: ");
         String userinput;
         userinput = KeyboardReader.readString();
         return LoadSimpleGraph(newgraph, userinput);
+    }
+    public static Hashtable<String, Vertex> destinos(SimpleGraph newgraph) {
+        System.out.print("Please enter the full path and file name for the input data: ");
+        String userinput;
+        userinput = KeyboardReader.readString();
+        return destinos(newgraph, userinput);
     }
 
     /**
@@ -49,6 +65,7 @@ public class GraphInput {
     public static Hashtable<String, Vertex> LoadSimpleGraph(SimpleGraph newgraph, String pathandfilename){
         BufferedReader  inbuf = InputLib.fopen(pathandfilename);
         System.out.println("Opened " + pathandfilename + " for input.");
+        String  line2 = InputLib.getLine(inbuf); // get first line
         String  line = InputLib.getLine(inbuf); // get first line
         StringTokenizer sTok;
         int n, linenum = 0;
@@ -84,7 +101,8 @@ public class GraphInput {
             }
             else {
                 System.err.println("Error:invalid number of tokens found on line " +linenum+ "!");
-                return null;
+                InputLib.fclose(inbuf);
+              return table;
             }
             line = InputLib.getLine(inbuf);
         }
@@ -94,6 +112,65 @@ public class GraphInput {
         return table;
     }
 
+    public static Hashtable<String, Vertex> destinos(SimpleGraph newgraph, String pathandfilename){
+        BufferedReader  inbuf = InputLib.fopen(pathandfilename);
+        System.out.println("Opened " + pathandfilename + " for input.");
+
+        java.lang.String line = InputLib.getLine(inbuf); // get first line
+        StringTokenizer sTok;
+        int n, linenum = 0;
+        Hashtable<java.lang.String, utility.Vertex> table = new Hashtable<java.lang.String, utility.Vertex>();
+        SimpleGraph sg = newgraph;
+
+        while (line != null) {
+            linenum++;
+            sTok = new StringTokenizer(line);
+            n = sTok.countTokens();
+            if (n==7) {
+
+                line = line.replaceAll("Zonas Seguras:","");
+                line = line.replaceAll(" - " ," ");
+                sTok = new StringTokenizer(line);
+
+                utility.Vertex v1, v2,v3;
+                java.lang.String v1name, v2name,v3name;
+
+                v1name = sTok.nextToken();
+                sTok.nextToken();
+                v2name = sTok.nextToken();
+                sTok.nextToken();
+                v3name = sTok.nextToken();
+
+                v1 = (utility.Vertex) table.get(v1name);
+                if (v1 == null) {
+//                      System.out.println("New vertex " + v1name);
+                    v1 = sg.insertVertex(null, v1name);
+                    table.put(v1name, v1);
+                }
+                v2 = (utility.Vertex) table.get(v2name);
+                if (v2 == null) {
+//                      System.out.println("New vertex " + v2name);
+                    v2 = sg.insertVertex(null, v2name);
+                    table.put(v2name, v2);
+                }
+                v3 = (utility.Vertex) table.get(v3name);
+                if (v3 == null) {
+//                      System.out.println("New vertex " + v2name);
+                    v3 = sg.insertVertex(null, v2name);
+                    table.put(v3name, v3);
+                }
+                return table;
+//
+            }
+            else {
+            }
+            line = InputLib.getLine(inbuf);
+        }
+
+        InputLib.fclose(inbuf);
+        System.out.println("Successfully loaded "+ linenum + " lines. ");
+        return table;
+    }
 
     /**
      * Code to test the methods of this class.

@@ -52,8 +52,15 @@ class InputLib {
      */
     public static String getLine(BufferedReader inbuf) {
         String line;
+
+
         try {
+
+
             line = inbuf.readLine();
+            line = line.replace("-", " ");
+            line = line.replaceAll("zombies"," ");
+
         }
         catch (java.io.IOException e) {
             throw new InputError(e.getMessage());

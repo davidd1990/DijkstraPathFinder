@@ -1,0 +1,8 @@
+Ciudades: 6
+Tunja-Bucaramanga 15 zombies
+Bogotá Tunja 20
+Cali Pasto 8
+Bogotá Cali 30
+Tunja Medellín 10
+Zonas Seguras: Pasto – Bucaramanga – Medellín
+X: Bogotá
