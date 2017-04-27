@@ -132,6 +132,57 @@ public class GraphInput {
                 line = line.replaceAll(" - " ," ");
                 sTok = new StringTokenizer(line);
 
+                utility.Vertex v;
+                java.lang.String vname;
+
+                while(!sTok.nextToken().isEmpty()){
+                    vname = sTok.nextToken();
+                    sTok.nextToken();
+                    v = (utility.Vertex) table.get(vname);
+                    if (v == null) {
+//                      System.out.println("New vertex " + v1name);
+                        v = sg.insertVertex(null, vname);
+                        table.put(vname, v);
+                    }
+                }
+
+                return table;
+
+//
+            }
+            else {
+            }
+            line = InputLib.getLine(inbuf);
+        }
+
+        InputLib.fclose(inbuf);
+        System.out.println("Successfully loaded "+ linenum + " lines. ");
+        return table;
+    }
+
+
+    public static Hashtable<String, Vertex> origen(SimpleGraph newgraph, String pathandfilename){
+
+
+        BufferedReader  inbuf = InputLib.fopen(pathandfilename);
+        System.out.println("Opened " + pathandfilename + " for input.");
+
+        java.lang.String line = InputLib.getLine(inbuf); // get first line
+        StringTokenizer sTok;
+        int n, linenum = 0;
+        Hashtable<java.lang.String, utility.Vertex> table = new Hashtable<java.lang.String, utility.Vertex>();
+        SimpleGraph sg = newgraph;
+
+        while (line != null) {
+            linenum++;
+            sTok = new StringTokenizer(line);
+            n = sTok.countTokens();
+            if (line.contains("X:")) {
+
+                line = line.replaceAll("X:","");
+                line = line.replaceAll(" - " ," ");
+                sTok = new StringTokenizer(line);
+
                 utility.Vertex v1, v2,v3;
                 java.lang.String v1name, v2name,v3name;
 
@@ -170,6 +221,7 @@ public class GraphInput {
         InputLib.fclose(inbuf);
         System.out.println("Successfully loaded "+ linenum + " lines. ");
         return table;
+
     }
 
     /**
