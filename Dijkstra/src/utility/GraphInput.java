@@ -126,7 +126,7 @@ public class GraphInput {
             linenum++;
             sTok = new StringTokenizer(line);
             n = sTok.countTokens();
-            if (n==7) {
+            if (line.contains("Zonas Seguras")) {
 
                 line = line.replaceAll("Zonas Seguras:","");
                 line = line.replaceAll(" - " ," ");
